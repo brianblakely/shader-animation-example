@@ -1,0 +1,36 @@
+{
+  "name": "shader-particle-animation-example",
+  "version": "1.0.0",
+  "description": "A test case for per-pixel WebGL animation.",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --inline --colors",
+    "start-c9": "webpack-dev-server --host $IP --port $PORT --colors",
+    "build": "webpack --devtool=source-map --optimize-minimize --optimize-occurence-order --optimize-dedupe --progress",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianblakely/shader-particle-animation-example.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brianblakely/shader-particle-animation-example/issues"
+  },
+  "homepage": "https://github.com/brianblakely/shader-particle-animation-example#readme",
+  "dependencies": {
+    "gsap": "^1.19.0",
+    "pixi.js": "^4.0.0-rc3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.13.2",
+    "browserify-versionify": "^1.0.6",
+    "ify-loader": "^1.0.3",
+    "shader-loader": "^1.2.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

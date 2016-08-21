@@ -1,2 +1,4 @@
 # shader-particle-animation-example
-A test case for per-pixel WebGL animation.
+(WIP) A test case for per-pixel WebGL animation.
+
+Uses Pixi.js to smooth over WebGL API.
