@@ -18,28 +18,17 @@ const renderer = new PIXI.autoDetectRenderer(
     view: cvs,
     transparent: true,
     antialias: true,
-    resolution: devicePixelRatio
+    resolution: window.devicePixelRatio
   }
 );
-
-const startTime = (new Date()).getTime();
 
 const filter = new PIXI.Filter(
   null,
-  shader,
-  {
-    iResolution: {
-      value: {
-        x: width,
-        y: height,
-        z: 0
-      }
-    },
-    iGlobalTime: {
-      value: 0
-    }
-  }
+  shader
 );
+
+filter.uniforms.resolution = [width*window.devicePixelRatio, height*window.devicePixelRatio];
+filter.uniforms.maxTime = 50;
 
 const stage = new PIXI.Container();
 stage.width = width;
@@ -52,7 +41,10 @@ renderer.render(stage);
 const draw = ()=> {
   renderer.render(stage);
 
-  filter.uniforms.iGlobalTime = ((new Date()).getTime() - startTime) / 1000;
+  if(filter.uniforms.time >= filter.uniforms.maxTime) {
+    filter.uniforms.time = -0.1;
+  }
+  filter.uniforms.time += 0.1;
 
   requestAnimationFrame(draw);
 };
