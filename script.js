@@ -11,6 +11,8 @@ cvs.height = cvs.offsetHeight;
 
 const {width, height} = cvs;
 
+const dpi = window.devicePixelRatio;
+
 const renderer = new PIXI.autoDetectRenderer(
   width,
   height,
@@ -18,7 +20,7 @@ const renderer = new PIXI.autoDetectRenderer(
     view: cvs,
     transparent: true,
     antialias: true,
-    resolution: window.devicePixelRatio
+    resolution: dpi
   }
 );
 
@@ -27,8 +29,13 @@ const filter = new PIXI.Filter(
   shader
 );
 
-filter.uniforms.resolution = [width*window.devicePixelRatio, height*window.devicePixelRatio];
-filter.uniforms.maxTime = 50;
+const viewport = [width*dpi, height*dpi],
+      maxTime = 50;
+
+Object.assign(filter.uniforms, {
+  viewport,
+  maxTime
+});
 
 const stage = new PIXI.Container();
 stage.width = width;
@@ -41,7 +48,7 @@ renderer.render(stage);
 const draw = ()=> {
   renderer.render(stage);
 
-  if(filter.uniforms.time >= filter.uniforms.maxTime) {
+  if(filter.uniforms.time >= maxTime) {
     filter.uniforms.time = -0.1;
   }
   filter.uniforms.time += 0.1;

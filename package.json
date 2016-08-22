@@ -21,7 +21,7 @@
   "homepage": "https://github.com/brianblakely/shader-particle-animation-example#readme",
   "dependencies": {
     "gsap": "^1.19.0",
-    "pixi.js": "^4.0.0-rc3"
+    "pixi.js": "^4.0.0-rc4"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",

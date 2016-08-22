@@ -1,6 +1,6 @@
 precision lowp float;
 
-uniform vec2 resolution;
+uniform vec2 viewport;
 uniform float time;
 uniform float maxTime;
 
@@ -9,11 +9,12 @@ float rand(vec2 co){
 }
 
 void main() {
-	float gradCol = gl_FragCoord.x/resolution.x;
+	float gradCol = gl_FragCoord.x/viewport.x;
+	float gradRow = 1.0 - gl_FragCoord.y/viewport.y;
 	float progress = time/maxTime;
-	bool display = progress > gradCol;
+	bool display = progress > gradCol && progress > gradRow;
 
-	float col = rand(gl_FragCoord.xy);
+	float noise = rand(gl_FragCoord.xy);
 
-	gl_FragColor = vec4(0.0, 0.0, display ? col : 0.0, 1.0);
+	gl_FragColor = vec4(0.0, 0.0, display ? noise : 0.0, 1.0);
 }
