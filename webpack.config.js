@@ -1,5 +1,5 @@
 const path = require(`path`);
-const webpack = require(`webpack`);
+const BabiliPlugin = require(`babili-webpack-plugin`);
 
 module.exports = {
   entry: `./script.js`,
@@ -8,28 +8,31 @@ module.exports = {
     extensions: [``, `.js`]
   },
 
+  plugins: process.env.NODE_ENV === `production` ? [new BabiliPlugin()] : [],
+
   module: {
     loaders: [
       {
+        loader: `babel`,
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: `babel`,
         query: {
           presets: [`es2015`],
+          plugins: [`transform-es2015-modules-commonjs`],
           cacheDirectory: true
         }
       },
       {
+        loader: `shader`,
         test: /\.(glsl|vs|fs)$/,
-        exclude: /(node_modules)/,
-        loader: `shader`
+        exclude: /(node_modules)/
       }
     ],
 
     postLoaders: [
       {
-        include: path.resolve(__dirname, `node_modules/pixi.js`),
-        loader: `ify`
+        loader: `ify`,
+        include: path.resolve(__dirname, `node_modules/pixi.js`)
       }
     ]
   },

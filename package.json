@@ -4,9 +4,9 @@
   "description": "A test case for per-pixel WebGL animation.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --colors",
-    "start-c9": "webpack-dev-server --inline --colors --host $IP --port $PORT",
-    "build": "webpack --devtool=source-map --optimize-minimize --optimize-occurence-order --optimize-dedupe --progress",
+    "start": "webpack-dev-server --open --inline --colors --stdin",
+    "start-c9": "webpack-dev-server --open --inline --colors --stdin --host $IP --port $PORT",
+    "build": "NODE_ENV=production webpack --devtool=source-map --optimize-occurence-order --optimize-dedupe --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,16 +21,18 @@
   "homepage": "https://github.com/brianblakely/shader-particle-animation-example#readme",
   "dependencies": {
     "gsap": "^1.19.0",
-    "pixi.js": "^4.0.0-rc4"
+    "pixi.js": "^4.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.13.2",
+    "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.13.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babili-webpack-plugin": "0.0.1",
     "browserify-versionify": "^1.0.6",
     "ify-loader": "^1.0.3",
     "shader-loader": "^1.2.1",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.15.0"
   }
 }
