@@ -39,8 +39,6 @@ Object.assign(filter.uniforms, {
 });
 
 const stage = new PIXI.Container();
-stage.width = width;
-stage.height = height;
 stage.filters = [filter];
 stage.filterArea = new PIXI.Rectangle(0,0,width,height);
 

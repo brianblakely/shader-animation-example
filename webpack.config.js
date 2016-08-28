@@ -1,5 +1,5 @@
 const path = require(`path`);
-const BabiliPlugin = require(`babili-webpack-plugin`);
+const BabiliPlugin = process.env.NODE_ENV === `production` ? require(`babili-webpack-plugin`) : null;
 
 module.exports = {
   entry: `./script.js`,
