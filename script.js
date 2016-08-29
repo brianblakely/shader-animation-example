@@ -29,10 +29,7 @@ const filter = new PIXI.Filter(
   fShader
 );
 
-const viewport = [width*dpi, height*dpi],
-      maxTime = 20;
-
-let time = 0;
+const viewport = [width*dpi, height*dpi];
 
 Object.assign(filter.uniforms, {
   viewport
@@ -62,17 +59,10 @@ figure.y = height * 0.9;
 
 stage.addChild(figure);
 
-const draw = ()=> {
-  renderer.render(stage);
 
-  if(time >= maxTime) {
-    time = -0.1;
-  }
-  time += 0.1;
 
-  filter.uniforms.progress = time/maxTime;
-
-  requestAnimationFrame(draw);
-};
+const draw = ()=> renderer.render(stage);
 
 requestAnimationFrame(draw);
+
+TweenMax.to(filter.uniforms, 2, {progress: 1, onUpdate: draw, repeat: -1, yoyo: true });
