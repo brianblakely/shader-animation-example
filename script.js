@@ -24,19 +24,44 @@ const renderer = new PIXI.autoDetectRenderer(
   }
 );
 
-const filter = new PIXI.Filter(
-  null,
-  fShader
-);
-
 const viewport = [width*dpi, height*dpi];
 
-Object.assign(filter.uniforms, {
-  viewport
-});
+function filter(options = {}) {
+  PIXI.Filter.call(this, null, fShader);
+
+  Object.assign(this.uniforms, {
+    viewport,
+    mappedMatrix: new PIXI.Matrix()
+  });
+}
+
+filter.prototype = Object.create(PIXI.Filter.prototype);
+
+filter.prototype.constructor = filter;
+
+Object.defineProperties(
+  filter.prototype, {
+    progress: {
+      get() {
+        return this.uniforms.progress;
+      },
+      set(value) {
+        this.uniforms.progress = value;
+      }
+    }
+  }
+);
+
+filter.prototype.apply = function(filterManager, input, output) {
+  filterManager.calculateNormalizedScreenSpaceMatrix(this.uniforms.mappedMatrix);
+
+  filterManager.applyFilter(this, input, output);
+};
+
+const myFilter = new filter();
 
 const stage = new PIXI.Container();
-stage.filters = [filter];
+stage.filters = [myFilter];
 stage.filterArea = new PIXI.Rectangle(0,0,width,height);
 
 const figure = new PIXI.Sprite.fromImage(`mm.png`);
@@ -59,10 +84,8 @@ figure.y = height * 0.9;
 
 stage.addChild(figure);
 
-
-
 const draw = ()=> renderer.render(stage);
 
 requestAnimationFrame(draw);
 
-TweenMax.to(filter.uniforms, 2, {progress: 1, onUpdate: draw, repeat: -1, yoyo: true });
+TweenMax.to(myFilter, 5, {progress: 1, onUpdate: draw, repeat: -1, yoyo: true });
